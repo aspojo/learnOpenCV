@@ -5,7 +5,7 @@ import numpy as np
 
 txt = open("testData-one.txt", encoding='utf-8-sig').readline()
 arr = txt.split(",")
-image = np.zeros((600, 3200, 3), dtype=np.ubyte)
+image = np.zeros((600, 3200), dtype=np.ubyte)
 
 for i in range(0, 3200 - 1):
     h = int(int(arr[i]) / 1000)
@@ -15,17 +15,18 @@ for i in range(0, 3200 - 1):
         h = 0
     for j in range(0, 8):
         image[h - j][i] = 255
+cv2.imshow("image", image)
 
-
-lines = cv2.HoughLinesP(cv2.cvtColor(image, cv2.COLOR_RGB2GRAY), 1, np.pi / 180, 100, minLineLength=100, maxLineGap=0)
+# cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+lines = cv2.HoughLinesP(image, 1, np.pi / 180, 100, minLineLength=100, maxLineGap=0)
 
 if lines is not None:
     for i in range(0, len(lines)):
-        cv2.line(image, (lines[i][0][0], lines[i][0][1]), (lines[i][0][2], lines[i][0][3]), (0, 255, 255), 3,
+        cv2.line(image, (lines[i][0][0], lines[i][0][1]), (lines[i][0][2], lines[i][0][3]), 200, 3,
                  cv2.LINE_AA)
 
-cv2.imshow("circle", image)
-cv2.imwrite("circle.jpg", image)
+cv2.imshow("image", image)
+cv2.imwrite("image.jpg", image)
 cv2.waitKey(0)
 
 #
