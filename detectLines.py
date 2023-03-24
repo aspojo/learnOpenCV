@@ -22,8 +22,9 @@ lines = cv2.HoughLinesP(image, 1, np.pi / 180, 100, minLineLength=100, maxLineGa
 
 if lines is not None:
     for i in range(0, len(lines)):
-        cv2.line(image, (lines[i][0][0], lines[i][0][1]), (lines[i][0][2], lines[i][0][3]), 200, 3,
-                 cv2.LINE_AA)
+        # 向上偏移gap像素
+        gap = 20
+        cv2.line(image, (lines[i][0][0], lines[i][0][1]-gap), (lines[i][0][2], lines[i][0][3]-gap), 200, 3, cv2.LINE_AA)
 
 cv2.imshow("image", image)
 cv2.imwrite("image.jpg", image)
